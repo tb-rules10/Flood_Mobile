@@ -28,7 +28,7 @@ class _FilterByStatusState extends State<FilterByStatus> {
             color: ThemeBloc.theme(widget.themeIndex).primaryColorLight,
           ),
           height: 500,
-          padding: EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(

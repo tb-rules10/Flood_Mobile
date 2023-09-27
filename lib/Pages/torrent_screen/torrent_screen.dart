@@ -120,67 +120,79 @@ class _TorrentScreenState extends State<TorrentScreen> {
                                   },
                                   revealableHeight: graphSstate.showChart
                                       ? hp / 3
-                                      : hp / 4.87,
+                                      : (stateFilterBloc.filterStatus != FilterValue.all || !(sortByState.sortByStatus == SortByValue.name && sortByState.nameDirection == SortByDirection.ascending)) ? hp / 3.7 : hp / 4.87,
                                   revealableBuilder: (BuildContext context,
                                       RevealableToggler opener,
                                       RevealableToggler closer,
                                       BoxConstraints constraints) {
-                                    return Column(
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                right: wp * 0.05,
-                                                left: wp * 0.05,
-                                                top: hp * 0.01,
-                                                bottom: hp * 0.02),
-                                            child: Row(
-                                              children: [
-                                                SpeedTextIconWidget(
-                                                  themeIndex: widget.themeIndex,
-                                                  speedIcon: Icons
-                                                      .arrow_upward_rounded,
-                                                  speedText: state.upSpeed,
-                                                  speedColor: ThemeBloc.theme(
-                                                          widget.themeIndex)
-                                                      .primaryColorDark,
+                                    return GestureDetector(
+                                      onTap: (){
+                                          print("___________________________________");
+                                          print(stateFilterBloc.filterStatus);
+                                          print(sortByState.sortByStatus);
+                                      },
+                                      child: Container(
+                                        // color: Colors.red,
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    right: wp * 0.05,
+                                                    left: wp * 0.05,
+                                                    top: hp * 0.01,
+                                                    bottom: hp * 0.02),
+                                                child: Row(
+                                                  children: [
+                                                    SpeedTextIconWidget(
+                                                      themeIndex: widget.themeIndex,
+                                                      speedIcon: Icons
+                                                          .arrow_upward_rounded,
+                                                      speedText: state.upSpeed,
+                                                      speedColor: ThemeBloc.theme(
+                                                              widget.themeIndex)
+                                                          .primaryColorDark,
+                                                    ),
+                                                    ShowChartButton(),
+                                                    SpeedTextIconWidget(
+                                                      themeIndex: widget.themeIndex,
+                                                      speedIcon: Icons
+                                                          .arrow_downward_rounded,
+                                                      speedText: state.downSpeed,
+                                                      speedColor: ThemeBloc.theme(
+                                                              widget.themeIndex)
+                                                          .colorScheme
+                                                          .secondary,
+                                                    ),
+                                                  ],
                                                 ),
-                                                ShowChartButton(),
-                                                SpeedTextIconWidget(
-                                                  themeIndex: widget.themeIndex,
-                                                  speedIcon: Icons
-                                                      .arrow_downward_rounded,
-                                                  speedText: state.downSpeed,
-                                                  speedColor: ThemeBloc.theme(
-                                                          widget.themeIndex)
-                                                      .colorScheme
-                                                      .secondary,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        if (graphSstate.showChart)
-                                          Expanded(
-                                            flex: 2,
-                                            child: Container(
-                                              padding: EdgeInsets.only(
-                                                  right: wp * 0.01,
-                                                  left: wp * 0.01,
-                                                  bottom: hp * 0.025),
-                                              width: double.infinity,
-                                              child: SpeedGraph(
-                                                model: BlocProvider.of<
-                                                    HomeScreenBloc>(context),
-                                                themeIndex: widget.themeIndex,
                                               ),
                                             ),
-                                          ),
-                                        SearchTorrentTextField(
-                                            themeIndex: widget.themeIndex,
-                                            stateFilterBlocState:
-                                                stateFilterBloc)
-                                      ],
+                                            if (graphSstate.showChart)
+                                              Expanded(
+                                                flex: 2,
+                                                child: Container(
+                                                  padding: EdgeInsets.only(
+                                                      right: wp * 0.01,
+                                                      left: wp * 0.01,
+                                                      bottom: hp * 0.025),
+                                                  width: double.infinity,
+                                                  child: SpeedGraph(
+                                                    model: BlocProvider.of<
+                                                        HomeScreenBloc>(context),
+                                                    themeIndex: widget.themeIndex,
+                                                  ),
+                                                ),
+                                              ),
+                                            SearchTorrentTextField(
+                                                themeIndex: widget.themeIndex,
+                                                stateFilterBlocState:
+                                                    stateFilterBloc,
+                                                sortByState: sortByState,
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     );
                                   },
                                 );
